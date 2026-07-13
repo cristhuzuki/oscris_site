@@ -2,35 +2,37 @@
 <html lang="pt-BR">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <title>OsCris — Desenvolvimento de Apps</title>
-  <link rel="icon" type="image/png" href="assets/favicon.png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;600&family=Space+Grotesk:wght@500;600;700&display=swap"
-    rel="stylesheet">
+  <meta name="description"
+    content="A OsCris transforma ideias reais em aplicativos, sistemas, APIs e produtos digitais simples, úteis e bem construídos." />
+  <meta name="theme-color" content="#070b1d" />
+
+  <link rel="icon"
+    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23070b1d'/%3E%3Ctext x='50' y='61' text-anchor='middle' font-family='monospace' font-size='39' font-weight='700'%3E%3Ctspan fill='%23ff7433'%3E%7B%3C/tspan%3E%3Ctspan fill='%23e7ebf4'%3E/%3C/tspan%3E%3Ctspan fill='%231f6fff'%3E%7D%3C/tspan%3E%3C/text%3E%3C/svg%3E" />
+
   <style>
     :root {
-      --bg: #07101F;
-      --bg-elevated: #0D1728;
-      --bg-soft: #111D31;
-      --blue: #0A84FF;
-      --blue-deep: #0066E6;
-      --gold: #FFB703;
-      --gold-soft: #FFD166;
-      --ink: #0F172A;
-      --text: #F8FAFC;
-      --muted: #94A3B8;
-      --border: rgba(148, 163, 184, 0.17);
-      --grad: linear-gradient(120deg, var(--gold) 0%, var(--gold-soft) 28%, var(--blue) 70%, var(--blue-deep) 100%);
-      --grad-blue: linear-gradient(135deg, var(--blue), var(--blue-deep));
+      --navy-950: #050817;
+      --navy-900: #070b1d;
+      --navy-850: #0a1027;
+      --navy-800: #0d1533;
+      --blue: #176dff;
+      --blue-light: #4b91ff;
+      --orange: #ff7433;
+      --text: #f4f7ff;
+      --muted: #a8b0c5;
+      --line: rgba(255, 255, 255, 0.09);
+      --card: rgba(255, 255, 255, 0.045);
+      --shadow: 0 24px 70px rgba(0, 0, 0, 0.34);
+      --radius-lg: 28px;
+      --radius-md: 20px;
+      --max-width: 1180px;
     }
 
     * {
-      margin: 0;
-      padding: 0;
       box-sizing: border-box;
     }
 
@@ -39,27 +41,30 @@
     }
 
     body {
-      background:
-        radial-gradient(circle at 15% 0%, rgba(255, 183, 3, 0.06), transparent 32%),
-        radial-gradient(circle at 85% 15%, rgba(10, 132, 255, 0.10), transparent 34%),
-        var(--bg);
+      margin: 0;
+      min-height: 100vh;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       color: var(--text);
-      font-family: 'Inter', -apple-system, sans-serif;
+      background:
+        radial-gradient(circle at 88% 12%, rgba(23, 109, 255, 0.14), transparent 28%),
+        radial-gradient(circle at 10% 40%, rgba(255, 116, 51, 0.08), transparent 24%),
+        linear-gradient(180deg, var(--navy-950), var(--navy-900) 45%, #080d21);
       line-height: 1.6;
       overflow-x: hidden;
     }
 
-    h1,
-    h2,
-    h3,
-    .display {
-      font-family: 'Space Grotesk', sans-serif;
-      font-weight: 700;
-      letter-spacing: -0.01em;
-    }
-
-    .mono {
-      font-family: 'JetBrains Mono', monospace;
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: -1;
+      opacity: .38;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, .025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, .025) 1px, transparent 1px);
+      background-size: 48px 48px;
+      mask-image: linear-gradient(to bottom, #000 0%, transparent 80%);
     }
 
     a {
@@ -67,553 +72,1124 @@
       text-decoration: none;
     }
 
-    .wrap {
-      max-width: 1120px;
-      margin: 0 auto;
-      padding: 0 24px;
+    button,
+    a {
+      -webkit-tap-highlight-color: transparent;
     }
 
-    /* ---------- NAV ---------- */
-    nav {
+    .container {
+      width: min(calc(100% - 40px), var(--max-width));
+      margin-inline: auto;
+    }
+
+    .site-header {
       position: sticky;
       top: 0;
       z-index: 50;
-      backdrop-filter: blur(12px);
-      background: rgba(7, 16, 31, 0.82);
-      border-bottom: 1px solid var(--border);
+      border-bottom: 1px solid transparent;
+      background: rgba(5, 8, 23, 0.78);
+      backdrop-filter: blur(18px);
+      transition: border-color 0.25s ease, background 0.25s ease;
     }
 
-    nav .wrap {
+    .site-header.scrolled {
+      border-bottom-color: var(--line);
+      background: rgba(5, 8, 23, 0.92);
+    }
+
+    .nav {
+      min-height: 76px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      height: 72px;
+      gap: 28px;
     }
 
     .brand {
-      display: flex;
+      display: inline-flex;
       align-items: center;
-      gap: 10px;
-      font-family: 'Space Grotesk', sans-serif;
+      gap: 12px;
+      font-family: "Courier New", monospace;
       font-weight: 700;
-      font-size: 1.15rem;
+      letter-spacing: -0.04em;
+      font-size: 1.5rem;
+      white-space: nowrap;
     }
 
-    .brand img {
-      height: 30px;
-      width: auto;
-      display: block;
+    .brand-symbol {
+      display: inline-flex;
+      align-items: center;
+      gap: 1px;
+      font-size: 1.35rem;
+      letter-spacing: -0.12em;
+    }
+
+    .orange {
+      color: var(--orange);
+    }
+
+    .blue {
+      color: var(--blue);
+    }
+
+    .silver {
+      color: #d7dce7;
     }
 
     .nav-links {
       display: flex;
-      gap: 32px;
-      font-size: 0.9rem;
+      align-items: center;
+      gap: 30px;
       color: var(--muted);
+      font-size: 0.95rem;
     }
 
-    .nav-links a:hover {
+    .nav-links a {
+      position: relative;
+      transition: color 0.2s ease;
+    }
+
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -7px;
+      width: 100%;
+      height: 2px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--orange), var(--blue));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.2s ease;
+    }
+
+    .nav-links a:hover,
+    .nav-links a:focus-visible {
       color: var(--text);
     }
 
-    @media (max-width: 640px) {
-      .nav-links {
-        display: none;
-      }
+    .nav-links a:hover::after,
+    .nav-links a:focus-visible::after {
+      transform: scaleX(1);
     }
 
-    /* ---------- HERO ---------- */
+    .nav-cta {
+      padding: 11px 17px;
+      border: 1px solid rgba(75, 145, 255, 0.4);
+      border-radius: 999px;
+      color: var(--text) !important;
+      background: rgba(23, 109, 255, 0.11);
+    }
+
+    .nav-cta::after {
+      display: none;
+    }
+
+    .menu-button {
+      display: none;
+      width: 44px;
+      height: 44px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.04);
+      font-size: 1.25rem;
+      cursor: pointer;
+    }
+
     .hero {
       position: relative;
-      padding: 100px 0 120px;
-      text-align: center;
-      overflow: hidden;
-    }
-
-    .hero-glow {
-      position: absolute;
-      top: -200px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 900px;
-      height: 900px;
-      background: radial-gradient(circle at center, rgba(10, 132, 255, 0.25) 0%, rgba(255, 183, 3, 0.11) 34%, transparent 70%);
-      filter: blur(10px);
-      pointer-events: none;
-    }
-
-    .ring-signature {
-      position: absolute;
-      top: 40px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 640px;
-      height: 640px;
-      opacity: 0.06;
-      pointer-events: none;
-      animation: breathe 8s ease-in-out infinite;
-    }
-
-    @keyframes breathe {
-
-      0%,
-      100% {
-        transform: translateX(-50%) scale(1) rotate(0deg);
-        opacity: 0.05;
-      }
-
-      50% {
-        transform: translateX(-50%) scale(1.04) rotate(4deg);
-        opacity: 0.09;
-      }
-    }
-
-    .hero-content {
-      position: relative;
-      z-index: 1;
-    }
-
-    .hero-logo {
-      max-width: 320px;
-      width: 70%;
-      height: auto;
-      margin: 0 auto 8px;
-      display: block;
-      animation: fadeUp 0.9s ease both;
-    }
-
-    .badge {
-      display: inline-flex;
+      min-height: calc(100vh - 76px);
+      display: grid;
+      grid-template-columns: 1.08fr 0.92fr;
       align-items: center;
-      gap: 8px;
-      padding: 7px 16px;
-      border-radius: 999px;
-      border: 1px solid var(--border);
-      background: rgba(255, 183, 3, 0.08);
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.78rem;
-      letter-spacing: 0.06em;
-      color: var(--gold);
-      margin-bottom: 28px;
-      animation: fadeUp 0.9s ease 0.1s both;
+      gap: 70px;
+      padding-block: 90px 100px;
     }
 
-    .badge::before {
-      content: '';
-      width: 7px;
-      height: 7px;
+    .hero::before {
+      content: "";
+      position: absolute;
+      width: 580px;
+      height: 580px;
+      right: -250px;
+      top: -130px;
       border-radius: 50%;
-      background: var(--gold);
-      box-shadow: 0 0 8px var(--gold);
-      animation: pulse 1.6s ease-in-out infinite;
-    }
-
-    @keyframes pulse {
-
-      0%,
-      100% {
-        opacity: 1;
-      }
-
-      50% {
-        opacity: 0.35;
-      }
-    }
-
-    .hero h1 {
-      font-size: clamp(2.1rem, 5.4vw, 3.4rem);
-      line-height: 1.12;
-      max-width: 780px;
-      margin: 0 auto 22px;
-      animation: fadeUp 0.9s ease 0.15s both;
-    }
-
-    .hero h1 .accent {
-      background: var(--grad);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-    }
-
-    .hero p.lead {
-      max-width: 560px;
-      margin: 0 auto 40px;
-      color: var(--muted);
-      font-size: 1.05rem;
-      animation: fadeUp 0.9s ease 0.2s both;
-    }
-
-    @keyframes fadeUp {
-      from {
-        opacity: 0;
-        transform: translateY(14px);
-      }
-
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .capture {
-      display: flex;
-      gap: 10px;
-      max-width: 440px;
-      margin: 0 auto;
-      animation: fadeUp 0.9s ease 0.25s both;
-    }
-
-    @media (max-width: 520px) {
-      .capture {
-        flex-direction: column;
-      }
-    }
-
-    .capture input {
-      flex: 1;
-      padding: 13px 16px;
-      border-radius: 10px;
-      border: 1px solid var(--border);
-      background: var(--bg-elevated);
-      color: var(--text);
-      font-family: 'Inter', sans-serif;
-      font-size: 0.95rem;
-    }
-
-    .capture input::placeholder {
-      color: var(--muted);
-    }
-
-    .capture input:focus {
-      outline: none;
-      border-color: var(--blue);
-      box-shadow: 0 0 0 3px rgba(10, 132, 255, 0.24);
-    }
-
-    .btn {
-      padding: 13px 22px;
-      border-radius: 10px;
-      border: none;
-      background: var(--grad-blue);
-      color: #fff;
-      font-family: 'Inter', sans-serif;
-      font-weight: 600;
-      font-size: 0.95rem;
-      cursor: pointer;
-      white-space: nowrap;
-      transition: transform 0.15s ease, box-shadow 0.15s ease;
-    }
-
-    .btn:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 8px 24px rgba(10, 132, 255, 0.30);
-    }
-
-    .btn:focus-visible {
-      outline: 2px solid var(--gold);
-      outline-offset: 2px;
-    }
-
-    .hero-note {
-      margin-top: 16px;
-      font-size: 0.8rem;
-      color: var(--muted);
-      animation: fadeUp 0.9s ease 0.3s both;
-    }
-
-    /* ---------- SECTION SHARED ---------- */
-    section {
-      padding: 96px 0;
+      border: 1px solid rgba(23, 109, 255, 0.13);
+      pointer-events: none;
     }
 
     .eyebrow {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.78rem;
-      letter-spacing: 0.08em;
-      color: var(--gold);
-      margin-bottom: 12px;
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 8px 13px;
+      border: 1px solid rgba(255, 116, 51, 0.28);
+      border-radius: 999px;
+      color: #ffb18d;
+      background: rgba(255, 116, 51, 0.07);
+      font-family: "Courier New", monospace;
+      font-size: 0.76rem;
+      font-weight: 700;
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--orange);
+      box-shadow: 0 0 18px rgba(255, 116, 51, 0.8);
+    }
+
+    h1 {
+      max-width: 750px;
+      margin: 25px 0 22px;
+      font-size: clamp(3.1rem, 6.4vw, 6.25rem);
+      line-height: 0.98;
+      letter-spacing: -0.065em;
+    }
+
+    .gradient-text {
+      color: transparent;
+      background: linear-gradient(90deg, #fcfdff 0%, #8cb7ff 50%, var(--blue) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+    }
+
+    .hero-description {
+      max-width: 665px;
+      margin: 0;
+      color: var(--muted);
+      font-size: clamp(1rem, 1.5vw, 1.18rem);
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 34px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 52px;
+      padding: 0 22px;
+      border: 1px solid transparent;
+      border-radius: 14px;
+      font-weight: 700;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    }
+
+    .button:hover {
+      transform: translateY(-2px);
+    }
+
+    .button-primary {
+      color: white;
+      background: linear-gradient(135deg, var(--blue), #0753d6);
+      box-shadow: 0 16px 35px rgba(23, 109, 255, 0.24);
+    }
+
+    .button-secondary {
+      border-color: var(--line);
+      background: rgba(255, 255, 255, 0.035);
+    }
+
+    .button-secondary:hover {
+      border-color: rgba(255, 255, 255, 0.22);
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 18px 28px;
+      margin-top: 35px;
+      color: #7f89a3;
+      font-family: "Courier New", monospace;
+      font-size: 0.82rem;
+    }
+
+    .hero-meta span {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .hero-meta span::before {
+      content: "";
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--blue-light);
+    }
+
+    .symbol-panel {
+      position: relative;
+      aspect-ratio: 1;
+      display: grid;
+      place-items: center;
+      isolation: isolate;
+    }
+
+    .symbol-panel::before,
+    .symbol-panel::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      z-index: -1;
+    }
+
+    .symbol-panel::before {
+      inset: 6%;
+      border: 1px solid rgba(75, 145, 255, 0.17);
+      background:
+        radial-gradient(circle at 64% 36%, rgba(23, 109, 255, 0.2), transparent 35%),
+        radial-gradient(circle at 30% 68%, rgba(255, 116, 51, 0.12), transparent 33%),
+        rgba(10, 16, 39, 0.72);
+      box-shadow: var(--shadow), inset 0 0 80px rgba(23, 109, 255, 0.06);
+      backdrop-filter: blur(8px);
+    }
+
+    .symbol-panel::after {
+      width: 32%;
+      height: 32%;
+      background: rgba(23, 109, 255, 0.3);
+      filter: blur(70px);
+      right: 12%;
+      top: 18%;
+    }
+
+    .code-symbol {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.02em;
+      font-family: "Courier New", monospace;
+      font-size: clamp(4.8rem, 9vw, 8.6rem);
+      font-weight: 700;
+      letter-spacing: -0.13em;
+      transform: translateX(-0.05em);
+      user-select: none;
+      text-shadow: 0 0 40px rgba(23, 109, 255, 0.13);
+    }
+
+    .section {
+      padding-block: 105px;
     }
 
     .section-head {
-      max-width: 620px;
-      margin-bottom: 56px;
-    }
-
-    .section-head h2 {
-      font-size: clamp(1.6rem, 3.4vw, 2.2rem);
-      margin-bottom: 14px;
-    }
-
-    .section-head p {
-      color: var(--muted);
-      font-size: 1rem;
-    }
-
-    /* ---------- APPS TEASER ---------- */
-    .apps-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
+      grid-template-columns: 0.8fr 1.2fr;
+      gap: 60px;
+      align-items: end;
+      margin-bottom: 45px;
     }
 
-    @media (max-width: 860px) {
-      .apps-grid {
-        grid-template-columns: 1fr;
-      }
+    .section-label {
+      margin: 0 0 12px;
+      color: var(--orange);
+      font-family: "Courier New", monospace;
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
     }
 
-    .app-card {
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      background: var(--bg-elevated);
-      padding: 28px 24px;
+    h2 {
+      margin: 0;
+      font-size: clamp(2.2rem, 4vw, 4.2rem);
+      line-height: 1.05;
+      letter-spacing: -0.05em;
+    }
+
+    .section-intro {
+      margin: 0;
+      color: var(--muted);
+      font-size: 1.08rem;
+    }
+
+    .services-grid,
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    .card {
       position: relative;
+      min-height: 260px;
+      padding: 28px;
       overflow: hidden;
-      transition: border-color 0.2s ease, transform 0.2s ease;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      background: var(--card);
+      transition: transform 0.25s ease, border-color 0.25s ease, background 0.25s ease;
     }
 
-    .app-card:hover {
-      border-color: rgba(10, 132, 255, 0.48);
-      transform: translateY(-3px);
+    .card:hover {
+      transform: translateY(-7px);
+      border-color: rgba(75, 145, 255, 0.26);
+      background: rgba(255, 255, 255, 0.06);
     }
 
-    .app-card .num {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.78rem;
-      color: var(--muted);
-      margin-bottom: 18px;
-      display: block;
-    }
-
-    .app-card .icon-slot {
-      width: 44px;
-      height: 44px;
+    .card-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
       border-radius: 12px;
-      background: linear-gradient(135deg, var(--gold) 0 47%, var(--blue) 53% 100%);
-      margin-bottom: 20px;
-      opacity: 0.9;
-    }
-
-    .app-card h3 {
-      font-size: 1.05rem;
-      margin-bottom: 8px;
-      color: var(--text);
-    }
-
-    .app-card p {
-      font-size: 0.88rem;
-      color: var(--muted);
-    }
-
-    .app-card .status {
-      display: inline-block;
-      margin-top: 16px;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.7rem;
-      letter-spacing: 0.05em;
-      color: var(--gold);
-      border: 1px solid rgba(255, 183, 3, 0.32);
-      border-radius: 999px;
-      padding: 4px 10px;
-    }
-
-    /* ---------- ABOUT ---------- */
-    .about {
-      display: grid;
-      grid-template-columns: 100px 1fr;
-      gap: 32px;
-      align-items: start;
-    }
-
-    @media (max-width: 640px) {
-      .about {
-        grid-template-columns: 1fr;
-      }
-
-      .about img {
-        width: 64px;
-      }
-    }
-
-    .about img {
-      width: 100px;
-      height: auto;
-    }
-
-    .about-text h2 {
-      font-size: clamp(1.5rem, 3vw, 2rem);
-      margin-bottom: 16px;
-    }
-
-    .about-text p {
-      color: var(--muted);
-      margin-bottom: 14px;
-      max-width: 620px;
-    }
-
-    .about-text p:last-child {
-      margin-bottom: 0;
-    }
-
-    .about-text strong {
-      color: var(--text);
-      font-weight: 600;
-    }
-
-    /* ---------- FOOTER ---------- */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 48px 0;
-    }
-
-    footer .wrap {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 20px;
-    }
-
-    .footer-brand {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-family: 'Space Grotesk', sans-serif;
+      color: #cdd8f0;
+      background: rgba(23, 109, 255, 0.11);
+      font-family: "Courier New", monospace;
+      font-size: 0.82rem;
       font-weight: 700;
     }
 
-    .footer-brand img {
-      height: 22px;
+    .card h3 {
+      margin: 34px 0 10px;
+      font-size: 1.2rem;
+      letter-spacing: -0.02em;
     }
 
-    footer .contact {
-      font-size: 0.9rem;
+    .card p {
+      margin: 0;
       color: var(--muted);
+      font-size: 0.95rem;
     }
 
-    footer .contact a:hover {
-      color: var(--gold);
+    .projects {
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.018);
     }
 
-    footer .copy {
-      width: 100%;
-      text-align: center;
+    .projects-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .project-card {
+      min-height: 330px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .project-card::before {
+      content: "";
+      position: absolute;
+      width: 130px;
+      height: 130px;
+      top: -70px;
+      right: -50px;
+      border-radius: 50%;
+      background: rgba(23, 109, 255, 0.12);
+      filter: blur(8px);
+    }
+
+    .project-status {
+      width: fit-content;
+      padding: 7px 10px;
+      border: 1px solid rgba(255, 116, 51, 0.25);
+      border-radius: 999px;
+      color: #ffb18d;
+      background: rgba(255, 116, 51, 0.06);
+      font-family: "Courier New", monospace;
+      font-size: 0.71rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .project-card h3 {
+      margin: 34px 0 12px;
+      font-size: 1.45rem;
+    }
+
+    .project-foot {
+      display: flex;
+      align-items: center;
+      gap: 10px;
       margin-top: 32px;
-      font-size: 0.78rem;
+      padding-top: 20px;
+      border-top: 1px solid var(--line);
+      color: #78839e;
+      font-family: "Courier New", monospace;
+      font-size: 0.8rem;
+    }
+
+    .project-foot::before {
+      content: "</>";
+      color: var(--blue-light);
+    }
+
+    .manifesto {
+      padding: 58px;
+      border: 1px solid rgba(75, 145, 255, 0.18);
+      border-radius: var(--radius-lg);
+      background:
+        linear-gradient(135deg, rgba(23, 109, 255, 0.09), rgba(255, 116, 51, 0.035)),
+        rgba(255, 255, 255, 0.025);
+      text-align: center;
+    }
+
+    .manifesto p {
+      max-width: 920px;
+      margin: 0 auto;
+      font-size: clamp(1.75rem, 3.5vw, 3.5rem);
+      line-height: 1.15;
+      letter-spacing: -0.045em;
+      font-weight: 700;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 0.82fr 1.18fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .about-mark {
+      position: relative;
+      min-height: 480px;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      background:
+        linear-gradient(145deg, rgba(255, 116, 51, 0.06), transparent 44%),
+        linear-gradient(325deg, rgba(23, 109, 255, 0.14), transparent 48%),
+        var(--card);
+    }
+
+    .about-mark .code-symbol {
+      font-size: clamp(4rem, 8vw, 7rem);
+    }
+
+    .about-copy p {
+      margin: 20px 0 0;
       color: var(--muted);
-      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.06rem;
+    }
+
+    .about-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      margin-top: 30px;
+    }
+
+    .about-list span {
+      padding: 13px 15px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      color: #c7cede;
+      background: rgba(255, 255, 255, 0.025);
+      font-family: "Courier New", monospace;
+      font-size: 0.8rem;
+    }
+
+    .contact {
+      padding-top: 30px;
+      padding-bottom: 110px;
+    }
+
+    .contact-box {
+      position: relative;
+      padding: 70px;
+      overflow: hidden;
+      border: 1px solid rgba(75, 145, 255, 0.2);
+      border-radius: var(--radius-lg);
+      background:
+        radial-gradient(circle at 92% 10%, rgba(23, 109, 255, 0.18), transparent 30%),
+        radial-gradient(circle at 2% 100%, rgba(255, 116, 51, 0.12), transparent 27%),
+        var(--navy-850);
+      box-shadow: var(--shadow);
+    }
+
+    .contact-box h2 {
+      max-width: 760px;
+    }
+
+    .contact-box p {
+      max-width: 680px;
+      margin: 20px 0 32px;
+      color: var(--muted);
+      font-size: 1.07rem;
+    }
+
+    .footer {
+      padding: 28px 0;
+      border-top: 1px solid var(--line);
+      color: #747f99;
+      font-size: 0.85rem;
+    }
+
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .footer strong {
+      color: #adb6ca;
+      font-weight: 600;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+
+    /* =========================================================
+       IMAGENS DA MARCA
+       Para trocar as imagens, basta substituir os arquivos
+       dentro da pasta assets, mantendo os mesmos nomes.
+       ========================================================= */
+
+    .brand-image-link {
+      width: 310px;
+      height: 84px;
+      overflow: hidden;
+    }
+
+    .brand-image {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      object-position: center;
+      display: block;
+      transform: scale(2.72);
+      transform-origin: center;
+    }
+
+    .hero-symbol-image {
+      width: 84%;
+      height: 84%;
+      object-fit: contain;
+      border-radius: 28px;
+      display: block;
+      box-shadow: 0 22px 60px rgba(0, 0, 0, 0.24);
+    }
+
+    .about-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: scale(2.5);
+      display: block;
+    }
+
+    .footer-logo {
+      width: 190px;
+      height: 62px;
+      object-fit: contain;
+      transform: scale(3.5);
+      display: block;
+    }
+
+    .footer-brand {
+      min-width: 190px;
+    }
+
+
+    .visual-chip {
+      position: absolute;
+      padding: 11px 14px;
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      background: rgba(7, 11, 29, .78);
+      backdrop-filter: blur(14px);
+      color: #c9d2e6;
+      font-family: "Courier New", monospace;
+      font-size: .76rem;
+      box-shadow: 0 14px 34px rgba(0, 0, 0, .28);
+    }
+
+    .visual-chip-one {
+      left: -2%;
+      top: 21%;
+    }
+
+    .visual-chip-two {
+      right: -4%;
+      bottom: 18%;
+    }
+
+    @media (max-width: 980px) {
+      .hero {
+        grid-template-columns: 1fr;
+        min-height: auto;
+        gap: 55px;
+        padding-top: 78px;
+      }
+
+      .hero-copy {
+        text-align: center;
+      }
+
+      .hero-description,
+      .hero-meta {
+        margin-inline: auto;
+      }
+
+      .hero-actions,
+      .hero-meta {
+        justify-content: center;
+      }
+
+      .symbol-panel {
+        width: min(620px, 100%);
+        margin-inline: auto;
+      }
+
+      .services-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .section-head,
+      .about-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+
+      .about-grid {
+        gap: 45px;
+      }
+
+      .about-mark {
+        min-height: 380px;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .visual-chip {
+        display: none;
+      }
+
+      .brand-image-link {
+        width: 225px;
+        height: 68px;
+      }
+
+      .hero-symbol-image {
+        width: 88%;
+        height: 88%;
+      }
+
+      .container {
+        width: min(calc(100% - 28px), var(--max-width));
+      }
+
+      .nav {
+        min-height: 68px;
+      }
+
+      .menu-button {
+        display: inline-grid;
+        place-items: center;
+      }
+
+      .nav-links {
+        position: absolute;
+        top: 68px;
+        left: 14px;
+        right: 14px;
+        display: none;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 4px;
+        padding: 14px;
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        background: rgba(7, 11, 29, 0.98);
+        box-shadow: var(--shadow);
+      }
+
+      .nav-links.open {
+        display: flex;
+      }
+
+      .nav-links a {
+        padding: 12px 13px;
+        border-radius: 10px;
+      }
+
+      .nav-links a:hover {
+        background: rgba(255, 255, 255, 0.04);
+      }
+
+      .nav-links a::after {
+        display: none;
+      }
+
+      .hero {
+        padding-block: 65px 80px;
+      }
+
+      h1 {
+        font-size: clamp(2.75rem, 14vw, 4.6rem);
+      }
+
+      .section {
+        padding-block: 78px;
+      }
+
+      .services-grid,
+      .projects-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .card,
+      .project-card {
+        min-height: auto;
+      }
+
+      .manifesto {
+        padding: 40px 22px;
+      }
+
+      .about-list {
+        grid-template-columns: 1fr;
+      }
+
+      .contact-box {
+        padding: 44px 24px;
+      }
+
+      .footer-inner {
+        flex-direction: column;
+        text-align: center;
+      }
     }
 
     @media (prefers-reduced-motion: reduce) {
-      * {
-        animation: none !important;
-        transition: none !important;
+      html {
+        scroll-behavior: auto;
+      }
+
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+
+      .reveal {
+        opacity: 1;
+        transform: none;
       }
     }
   </style>
 </head>
 
 <body>
+  <header class="site-header" id="top">
+    <div class="container nav">
+      <a href="#inicio" class="brand brand-image-link" aria-label="OsCris - início">
+        <!-- Troque o arquivo assets/logo-horizontal.png pela versão que desejar -->
+        <img class="brand-image" src="assets/logo-horizontal.png" alt="OsCris — Desenvolvimento de Apps" />
+      </a>
 
-  <nav>
-    <div class="wrap">
-      <div class="brand">
-        <img src="assets/somente_simbolo_cropped.png" alt="">
-        OsCris
-      </div>
-      <div class="nav-links">
-        <a href="#apps">Em desenvolvimento</a>
+      <button class="menu-button" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="nav-links">
+        ☰
+      </button>
+
+      <nav class="nav-links" id="nav-links" aria-label="Navegação principal">
+        <a href="#especialidades">Especialidades</a>
+        <a href="#projetos">Projetos</a>
         <a href="#sobre">Sobre</a>
-        <a href="#contato">Contato</a>
-      </div>
+        <a href="#contato" class="nav-cta">Entrar em contato</a>
+      </nav>
     </div>
-  </nav>
+  </header>
 
-  <section class="hero">
-    <div class="hero-glow"></div>
-    <!-- <img class="ring-signature" src="assets/somente_simbolo_cropped.png" alt=""> -->
-    <div class="wrap hero-content">
-      <img class="hero-logo" src="assets/logo_horizontal_tema_escuro.png" alt="OsCris — Desenvolvimento de Apps">
+  <main>
+    <section class="container hero" id="inicio">
+      <div class="hero-copy reveal">
+        <span class="eyebrow">Produtos digitais em desenvolvimento</span>
 
-      <div class="badge">EM COMPILAÇÃO</div>
+        <h1>
+          Ideias reais transformadas em
+          <span class="gradient-text">produtos digitais.</span>
+        </h1>
 
-      <h1>Apps que ainda não existem, <span class="accent">mas já estão sendo construídos.</span></h1>
+        <p class="hero-description">
+          A OsCris é um estúdio independente de desenvolvimento focado em
+          aplicativos, sistemas e integrações criados para resolver problemas
+          reais de forma simples, útil e bem construída.
+        </p>
 
-      <p class="lead">Sou Cris Thuzuki — depois de duas décadas construindo software por trás das cenas, agora é a vez
-        de
-        colocar meus próprios apps no ar. O primeiro lançamento está a caminho.</p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="#projetos">
+            Conheça os projetos
+            <span aria-hidden="true">→</span>
+          </a>
 
-      <!-- <form class="capture"
-        onsubmit="event.preventDefault(); window.location.href = 'mailto:contato@oscris.com.br?subject=Quero saber quando lançar';">
-        <input type="email" placeholder="seu@email.com" aria-label="Seu e-mail" required>
-        <button type="submit" class="btn">Avise-me no lançamento</button>
-      </form>
-      <p class="hero-note">Sem spam — só um aviso quando o primeiro app estiver pronto.</p> -->
-    </div>
-  </section>
-
-  <section id="apps">
-    <div class="wrap">
-      <div class="section-head">
-        <div class="eyebrow">&lt; O QUE VEM POR AÍ /&gt;</div>
-        <h2>Três ideias, um pipeline só.</h2>
-        <p>Cada projeto entra no ar quando estiver pronto de verdade — nada de lançamento apressado só para preencher
-          espaço.</p>
-      </div>
-
-      <div class="apps-grid">
-        <div class="app-card">
-          <span class="num">01</span>
-          <div class="icon-slot"></div>
-          <h3>Projeto Alpha</h3>
-          <p>App mobile focado em produtividade do dia a dia. Detalhes em breve.</p>
-          <span class="status">EM DESENVOLVIMENTO</span>
+          <a class="button button-secondary" href="mailto:cristhuzuki@gmail.com">
+            Falar com a Cris
+          </a>
         </div>
-        <div class="app-card">
-          <span class="num">02</span>
-          <div class="icon-slot"></div>
-          <h3>Projeto Beta</h3>
-          <p>Ferramenta pensada para resolver um problema real do cotidiano.</p>
-          <span class="status">EM PLANEJAMENTO</span>
-        </div>
-        <div class="app-card">
-          <span class="num">03</span>
-          <div class="icon-slot"></div>
-          <h3>Projeto Gama</h3>
-          <p>Ainda no papel — a ideia está amadurecendo antes de virar código.</p>
-          <span class="status">RASCUNHO</span>
+
+        <div class="hero-meta" aria-label="Áreas de experiência">
+          <span>20 anos de experiência</span>
+          <span>Flutter &amp; Mobile</span>
+          <span>APIs &amp; Integrações</span>
         </div>
       </div>
-    </div>
-  </section>
 
-  <section id="sobre">
-    <div class="wrap about">
-      <img src="assets/somente_simbolo_cropped.png" alt="">
-      <div class="about-text">
-        <h2>Quem está construindo isso</h2>
-        <p><strong>Cris Thuzuki</strong> passou os últimos 20 anos desenvolvendo e depois liderando times
-          de desenvolvimento em Flutter e Dart — sempre construindo produtos de outras pessoas.</p>
-        <p>A OsCris nasce como o espaço onde as próprias ideias saem do papel: apps mobile pensados, projetados e
-          construídos do zero, com o mesmo cuidado técnico de duas décadas de experiência.</p>
-        <p>Nenhum app está pronto ainda — e está tudo bem. Prefiro lançar bem feito a lançar rápido.</p>
+      <div class="symbol-panel reveal" aria-label="Símbolo da OsCris">
+        <!-- Troque o arquivo assets/simbolo-avatar.png para mudar a imagem principal -->
+        <img class="hero-symbol-image" src="assets/simbolo-avatar.png" alt="Símbolo de programação da OsCris" />
+        <span class="visual-chip visual-chip-one">Apps · APIs · Integrações</span>
+        <span class="visual-chip visual-chip-two">Produto em construção</span>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <footer id="contato">
-    <div class="wrap">
-      <div class="footer-brand">
-        <img src="assets/logo_horizontal_tema_escuro.png" alt="">
-        OsCris
+    <section class="section container" id="especialidades">
+      <div class="section-head reveal">
+        <div>
+          <p class="section-label">O que eu desenvolvo</p>
+          <h2>Tecnologia com propósito.</h2>
+        </div>
+
+        <p class="section-intro">
+          Da ideia inicial ao produto funcionando, cada solução é pensada para
+          unir usabilidade, desempenho e uma experiência clara para quem vai
+          utilizá-la.
+        </p>
       </div>
-      <div class="contact">
-        <a href="mailto:cristhuzuki@oscris.com.br">cristhuzuki@oscris.com.br</a>
+
+      <div class="services-grid">
+        <article class="card reveal">
+          <span class="card-number">01</span>
+          <h3>Aplicativos mobile</h3>
+          <p>
+            Aplicativos para Android e iOS com foco em experiência, estabilidade
+            e simplicidade de uso.
+          </p>
+        </article>
+
+        <article class="card reveal">
+          <span class="card-number">02</span>
+          <h3>Sistemas e painéis</h3>
+          <p>
+            Ferramentas digitais para organizar operações, acompanhar informações
+            e facilitar rotinas.
+          </p>
+        </article>
+
+        <article class="card reveal">
+          <span class="card-number">03</span>
+          <h3>APIs e integrações</h3>
+          <p>
+            Conexões entre aplicativos, dispositivos, bancos de dados e serviços
+            externos.
+          </p>
+        </article>
+
+        <article class="card reveal">
+          <span class="card-number">04</span>
+          <h3>Produtos próprios</h3>
+          <p>
+            Ideias independentes desenvolvidas da concepção ao lançamento, sempre
+            partindo de necessidades reais.
+          </p>
+        </article>
       </div>
-      <div class="copy">&lt;/&gt; oscris.com.br — em construção</div>
+    </section>
+
+    <section class="section projects" id="projetos">
+      <div class="container">
+        <div class="section-head reveal">
+          <div>
+            <p class="section-label">Projetos</p>
+            <h2>O que está sendo construído.</h2>
+          </div>
+
+          <p class="section-intro">
+            Alguns projetos ainda estão em fase de desenvolvimento. Por enquanto,
+            apresento o propósito de cada solução sem revelar detalhes estratégicos.
+          </p>
+        </div>
+
+        <div class="projects-grid">
+          <article class="card project-card reveal">
+            <div>
+              <span class="project-status">Em desenvolvimento</span>
+              <h3>Controle de acesso inteligente</h3>
+              <p>
+                Uma solução prática para registrar e acompanhar a entrada e saída
+                de pessoas em empresas, condomínios e outros ambientes.
+              </p>
+            </div>
+            <div class="project-foot">Mobile · Gestão · Segurança</div>
+          </article>
+
+          <article class="card project-card reveal">
+            <div>
+              <span class="project-status">Em desenvolvimento</span>
+              <h3>Cuidados compartilhados</h3>
+              <p>
+                Um aplicativo criado para centralizar medicações, compromissos,
+                documentos e informações importantes de quem precisa de cuidado.
+              </p>
+            </div>
+            <div class="project-foot">Organização · Saúde · Família</div>
+          </article>
+
+          <article class="card project-card reveal">
+            <div>
+              <span class="project-status">Laboratório</span>
+              <h3>Novos experimentos digitais</h3>
+              <p>
+                Pequenas ferramentas e protótipos desenvolvidos para testar ideias,
+                validar necessidades e transformar problemas em soluções.
+              </p>
+            </div>
+            <div class="project-foot">Pesquisa · Produto · Validação</div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section container">
+      <div class="manifesto reveal">
+        <p>
+          “Tecnologia boa não complica a rotina.
+          <span class="gradient-text">Ela faz o difícil parecer simples.</span>”
+        </p>
+      </div>
+    </section>
+
+    <section class="section container" id="sobre">
+      <div class="about-grid">
+        <div class="about-mark reveal">
+          <!-- Você também pode trocar esta imagem separadamente -->
+          <img class="about-image" src="assets/logo-circular.png" alt="Identidade visual da OsCris" />
+        </div>
+
+        <div class="about-copy reveal">
+          <p class="section-label">Por trás do OsCris</p>
+          <h2>Experiência para transformar ideias em produto.</h2>
+
+          <p>
+            Sou Cris Thuzuki, desenvolvedora de software com 20 anos de experiência
+            na criação de aplicativos, integrações e soluções digitais.
+          </p>
+
+          <p>
+            Depois de anos desenvolvendo produtos para empresas e clientes, criei a
+            OsCris como um espaço para transformar ideias próprias em soluções úteis,
+            simples e bem construídas.
+          </p>
+
+          <p>
+            Cada projeto nasce de um problema real e é desenvolvido com atenção à
+            tecnologia, à experiência de uso e ao impacto que pode gerar.
+          </p>
+
+          <div class="about-list" aria-label="Tecnologias e competências">
+            <span>Flutter / Dart</span>
+            <span>Android / iOS</span>
+            <span>APIs / Backend</span>
+            <span>Integrações</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact container" id="contato">
+      <div class="contact-box reveal">
+        <p class="section-label">Contato</p>
+        <h2>Tem uma ideia ou quer acompanhar os próximos lançamentos?</h2>
+        <p>
+          Entre em contato para conversar sobre produtos digitais, desenvolvimento
+          de aplicativos, integrações ou possíveis parcerias.
+        </p>
+        <a class="button button-primary" href="mailto:contato@oscris.com.br">
+          contato@oscris.com.br
+          <span aria-hidden="true">↗</span>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="brand footer-brand" aria-label="OsCris">
+        <img class="footer-logo" src="assets/logo-horizontal.png" alt="OsCris" />
+      </div>
+
+      <span>
+        © <span id="current-year"></span> <strong>OsCris</strong>.
+        Desenvolvimento de apps e produtos digitais.
+      </span>
     </div>
   </footer>
 
+  <script>
+    const header = document.querySelector(".site-header");
+    const menuButton = document.querySelector(".menu-button");
+    const navLinks = document.querySelector(".nav-links");
+
+    window.addEventListener("scroll", () => {
+      header.classList.toggle("scrolled", window.scrollY > 12);
+    });
+
+    menuButton.addEventListener("click", () => {
+      const isOpen = navLinks.classList.toggle("open");
+      menuButton.setAttribute("aria-expanded", String(isOpen));
+      menuButton.textContent = isOpen ? "×" : "☰";
+    });
+
+    navLinks.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", () => {
+        navLinks.classList.remove("open");
+        menuButton.setAttribute("aria-expanded", "false");
+        menuButton.textContent = "☰";
+      });
+    });
+
+    const revealElements = document.querySelectorAll(".reveal");
+
+    if ("IntersectionObserver" in window) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("visible");
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.12 }
+      );
+
+      revealElements.forEach((element) => observer.observe(element));
+    } else {
+      revealElements.forEach((element) => element.classList.add("visible"));
+    }
+
+    document.getElementById("current-year").textContent =
+      new Date().getFullYear();
+  </script>
 </body>
 
 </html>
